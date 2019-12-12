@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body, * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-family: sans-serif;
+        }
+        .counter {
+            display: inline-block;
+            position: relative;
+        }
+        .counter__digits {
+            background: #000;
+            color: #fff;
+            font-style: italic;
+            position: absolute;
+            top: 205px;
+            font-size: 44px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 195px;
+        }
+    </style>
+</head>
+<body>
+    <div class="counter">
+        <img src="/img/bg.jpg" alt="santa img" width="300">
+        <div id="counter" class="counter__digits">
+        </div>
+    </div>
+    <script>
+        var counter = document.getElementById('counter');
+        setInterval(function() {
+            let curDate = new Date();
+            let newYear = new Date(2000, 0, 1);
+            console.log(newYear);
+            newYear.setFullYear(curDate.getFullYear() + 1);
+            console.log(newYear, curDate);
+            let ms = newYear - curDate;
+            let days = (ms/(1000 * 60 * 60 * 24)).toFixed();
+            counter.innerText = days + ' ' + wordDecline(days, ['день', 'дня', 'дней']);
+        }, 1000);
+
+        /**
+        *@param num int Digit
+        *@param expressions array Look like 'first', 'second', 'third', 'first' - word for one thing, 'second' word for two things, 'third' - word for five things
+        */
+        function wordDecline(num, expressions) {
+            var result;
+            count = num % 100;
+            if (count >= 5 && count <= 20) {
+                result = expressions['2'];
+            } else {
+                count = count % 10;
+                if (count == 1) {
+                    result = expressions['0'];
+                } else if (count >= 2 && count <= 4) {
+                    result = expressions['1'];
+                } else {
+                    result = expressions['2'];
+                }
+            }
+            return result;
+        }
+    </script>
+</body>
+</html>
